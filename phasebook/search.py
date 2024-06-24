@@ -27,4 +27,35 @@ def search_users(args):
 
     # Implement search here!
 
-    return USERS
+
+    "return USERS"
+    results = []
+    added_ids=set()
+    search_prio = ['id', 'name', 'age', 'occupation']
+
+    if args != {}:
+        for user in USERS:
+            for key in search_prio:
+                if key in args:
+                    value = str(args[key])
+                    user_value = str(user.get(key))
+
+                    if str(key) == "age":
+                        target_age = [int(value) + 1, int(value), int(value) - 1]
+                        for age in target_age:
+                            if str(age) in user_value and user['id'] not in added_ids:
+                                results.append(user)
+                                added_ids.add(user['id'])
+
+                    else:
+                        if value.lower() in user_value.lower() and user['id'] not in added_ids:
+                            results.append(user)
+                            added_ids.add(user['id'])
+
+        return results
+
+    else:
+        return USERS
+
+
+
